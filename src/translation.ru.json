@@ -1,3 +1,15 @@
 {
-    "Welcome to React": "Welcome to React and react-i18next"
+    "Profile": "Профиль",
+    "Help": "Помощь",
+    "Change password": "Изменить пароль",
+    "Full name": "Полное имя",
+    "Email": "Электронная почта",
+    "Logout": "Выход",
+    "Select App Language": "Выберете язык",
+    "Logout on all devices": "Выход со всех устройств",
+    "ROLE_SUPER_ADMIN": "Супер админ",
+    "Contact us": "Свяжитесь с нами",
+    "Let us know how we can help": "Скажите нам, как мы можем помочь",
+    "Send": "Отправить"
+
 }

@@ -1,7 +1,6 @@
-import * as userPageEpics from './userPageEpics';
-import * as userModalEpics from './userModalEpics';
+
+import * as profilePageEpics from './profilePageEpics';
 
 export default [
-    ...Object.values(userPageEpics),
-    ...Object.values(userModalEpics),
+    ...Object.values(profilePageEpics)
 ]

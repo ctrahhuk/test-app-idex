@@ -1,24 +1,25 @@
-import 'react-app-polyfill/ie11';
-import 'react-app-polyfill/ie9';
-import 'react-app-polyfill/stable';
-import 'babel-polyfill';
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from "./App";
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
-import { configureStore, history } from './rootStore';
+import { createBrowserHistory } from 'history'
+import { applyMiddleware, compose, createStore } from 'redux'
+import { routerMiddleware } from 'connected-react-router'
+import createRootReducer from './rootReducer'
+import { createEpicMiddleware } from "redux-observable";
 
-const store = configureStore({});
+import rootEpic from './rootEpic'
 
-UserService.getWorkspaces().subscribe(() => {
-    ReactDOM.render(
-        <Provider store={store}>
-            <ConnectedRouter history={history}>
-                <App/>
-            </ConnectedRouter>
-            <NotificationsViewer />
-        </Provider>,
-        document.getElementById('root')
+export const history = createBrowserHistory();
+const epicMiddleware = createEpicMiddleware();
+
+export const configureStore = (preloadedState) => {
+    const composeEnhancers =
+        (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+    const store = createStore(
+        createRootReducer(history), // root reducer with router state
+        preloadedState,
+        composeEnhancers(applyMiddleware(epicMiddleware, routerMiddleware(history))),
     );
-},() => UserService.logout());
+    epicMiddleware.run(rootEpic);
+    return store
+};
+
+
